@@ -1,5 +1,8 @@
 var request = require("request"),
-	_ = require("underscore")._;
+	_ = require("underscore")._,
+	config = require(process.execPath + '/../../lib/node_modules/spas/lib/config').config,
+	oauth = require(process.execPath + "/../../lib/node_modules/spas/lib/oauth")
+	;
 
 /*
 	# Simple API Request
@@ -18,11 +21,7 @@ exports["request"] = function(params, credentials, cb) {
 		}
 	});
 	
-	if (_.isObject(credentials) && _.has(credentials, 'access_token')) {
-		reqString += "&access_token=" + credentials.access_token;
-	}
-
-	request({url: reqString, headers: params.headers || {}}, function (err, res, body) {
+	var handleResponse = function(err, res, body) {
 		var result, error;
 		if (!err && res.statusCode == 200) {
 			try {
@@ -47,6 +46,21 @@ exports["request"] = function(params, credentials, cb) {
 				cb(error, result );	
 			}
 		}
-	});
+	}
+	
+	if (credentials.type === 'oauth') {
+		var oaData = config.authentication[api.auth.provider];
+		var oa = new oauth(oaData.requestTemporaryCredentials,
+              oaData.requestAccessToken,
+              oaData.oauth_consumer_key,
+              oaData.client_secret,
+              oaData.version,
+              oaData.authorize,
+              oaData.encryption),
+              self = this;
+		oa.get(reqString, credentials.oauth_token, credentials.oauth_token_secret, handleResponse) {
+	} else {
+		request({url: reqString, headers: params.headers || {}}, handleResponse);
+	}
 	
 }
