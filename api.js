@@ -2,7 +2,7 @@ var request = require("request"),
 	_ = require("underscore")._,
 	config = require(process.execPath + '/../../lib/node_modules/spas/lib/config').config,
 	oauth = require(process.execPath + "/../../lib/node_modules/spas/lib/oauth").OAuth
-	;
+	nonceCounter = 0;
 
 /*
 	# Simple API Request
