@@ -1,7 +1,7 @@
 var request = require("request"),
 	_ = require("underscore")._,
 	config = require(process.execPath + '/../../lib/node_modules/spas/lib/config').config,
-	oauth = require(process.execPath + "/../../lib/node_modules/spas/lib/oauth")
+	oauth = require(process.execPath + "/../../lib/node_modules/spas/lib/oauth").OAuth
 	;
 
 /*
@@ -20,6 +20,10 @@ exports["request"] = function(params, credentials, cb) {
 			first = false;
 		}
 	});
+	
+	var handleOauthResponse = function(err, body, res) {
+		handleResponse(err, res, body);
+	}
 	
 	var handleResponse = function(err, res, body) {
 		var result, error;
@@ -48,8 +52,8 @@ exports["request"] = function(params, credentials, cb) {
 		}
 	}
 	
-	if (credentials.type === 'oauth') {
-		var oaData = config.authentication[api.auth.provider];
+	if (credentials && credentials.type === 'oauth') {
+		var oaData = config.authentication[credentials.provider];
 		var oa = new oauth(oaData.requestTemporaryCredentials,
               oaData.requestAccessToken,
               oaData.oauth_consumer_key,
@@ -58,7 +62,7 @@ exports["request"] = function(params, credentials, cb) {
               oaData.authorize,
               oaData.encryption),
               self = this;
-		oa.get(reqString, credentials.oauth_token, credentials.oauth_token_secret, handleResponse) {
+		oa.get(reqString, credentials.oauth_token, credentials.oauth_token_secret, handleOauthResponse);
 	} else {
 		request({url: reqString, headers: params.headers || {}}, handleResponse);
 	}
