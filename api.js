@@ -1,8 +1,7 @@
 var request = require("request"),
 	_ = require("underscore")._,
-	config = require(process.execPath + '/../../lib/node_modules/spas/lib/config').config,
-	oauth = require(process.execPath + "/../../lib/node_modules/spas/lib/oauth").OAuth
-	nonceCounter = 0;
+	oauth = require('oauth').OAuth
+;
 
 /*
 	# Simple API Request
@@ -42,9 +41,10 @@ exports["request"] = function(params, credentials, cb) {
 			try {
 				result = JSON.parse(body);
 				result.size = body.length;
-				error = null;
+				error = err;
 			} catch(e) {
-				error = e;
+				error = err;
+				error.parseError = e;
 				result = {size: 0, errnum:1, errtxt:"Request failed"}
 			} finally {
 				cb(error, result );	
@@ -53,7 +53,7 @@ exports["request"] = function(params, credentials, cb) {
 	}
 	
 	if (credentials && credentials.type === 'oauth') {
-		var oaData = config.authentication[credentials.provider];
+		var oaData = credentials.authConfig;
 		var oa = new oauth(oaData.requestTemporaryCredentials,
               oaData.requestAccessToken,
               oaData.oauth_consumer_key,
