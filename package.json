@@ -1,7 +1,7 @@
 {
   "name": "spas-http",
   "description": "Default HTTP wrapper for spas",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "author": {
     "name": "Donovan Buck",
     "email": "donovan@donovan.bz",
@@ -13,14 +13,14 @@
   },
   "keywords": [
     "spas",
-    "little-spas",
     "proxy",
     "cache",
     "api"
   ],
   "dependencies": {
     "request": "2.x.x",
-    "underscore": "1.x.x"
+    "underscore": "1.x.x",
+    "oauth": "0.x.x"
   },
   "main": "./api.js",
   "engines": {
