@@ -43,7 +43,7 @@ exports["request"] = function(params, credentials, cb) {
 				result.size = body.length;
 				error = err;
 			} catch(e) {
-				error = err;
+				error = err || { statusCode: res.statusCode };
 				error.parseError = e;
 				result = {size: 0, errnum:1, errtxt:"Request failed"}
 			} finally {
