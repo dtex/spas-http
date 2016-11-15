@@ -1,7 +1,7 @@
 {
   "name": "spas-http",
   "description": "Default HTTP wrapper for spas",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": {
     "name": "Donovan Buck",
     "email": "donovan@donovan.bz",

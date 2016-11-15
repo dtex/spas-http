@@ -2,10 +2,10 @@
 
 Default JSON request via HTTP for spas
 
-### Installing spas-request
+### Installing spas-http
 ``` bash
-$ [sudo] npm install spas-request
+$ [sudo] npm install spas-http
 ```
 
 ## Documentation
-[http://dtex.github.com/spas-request](http://dtex.github.com/spas-request)
+[http://dtex.github.com/spas-http](http://dtex.github.com/spas-http)
