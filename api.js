@@ -60,7 +60,9 @@ exports["request"] = function(params, credentials, cb) {
               oaData.client_secret,
               oaData.version,
               oaData.authorize,
-              oaData.encryption),
+              oaData.encryption,
+              null,
+              params.headers || {}),
               self = this;
 		oa.get(reqString, credentials.oauth_token, credentials.oauth_token_secret, handleOauthResponse);
 	} else {
